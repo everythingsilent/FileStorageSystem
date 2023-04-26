@@ -12,10 +12,12 @@
 
    | 键      | 值                                |
    | ------- | --------------------------------- |
-   | id      | id object                         |
+   | _id     | id object                         |
    | type    | 文本/文件                         |
    | content | url编码后的（文本内容\|文件地址） |
    | time    | 存放时间                          |
    | name    | 文本名/文件名                     |
    | size    | 文本字数/文件大小                 |
-
+3. web页面设计
+![mainPage2](E:\Self\FileStorageSystem\doc\mainPage2.png)
+![mainPage1](E:\Self\FileStorageSystem\doc\mainPage1.png)

@@ -9,7 +9,6 @@
           <el-divider></el-divider>
         </el-row>
       </div>
-
       <div class="content">
         <el-row :gutter="20">
           <el-col :span="5" :offset="8">
@@ -41,43 +40,59 @@
 <script>
   import axios from 'axios';
 
+  function extractRecords() {
+    this.verifyCodeRule();
+    if (this.passVerifyCodeRule) {
+      this.openMainPage(this.code);
+    }else{
+      this.errorMessage("提取码有误！");
+    }
+  }
+
+  function verifyCodeRule() {
+    var regexp = /^([a-zA-Z]|[0-9]){4}$/g;
+    this.passVerifyCodeRule = regexp.test(this.code);
+  }
+
+  function openMainPage(code=null) {
+    window.open('/main/'+code, '_self');
+  }
+
+  function errorMessage(message) {
+    alert(message);
+  }
+
+  async function createRecords() {
+    try {
+      await this.createCode();
+      this.extractRecords();
+    } catch {
+      alert("服务端连接失败!");
+    }
+  }
+
+  async function createCode() {
+    const url = this.API+"create-records/";
+    await axios.post(url).then((res)=>{
+      this.code = res.data.code;
+    })
+  }
+  
   export default {
     data() {
       return {
+        API:'http://localhost:8082/api/',
         code:'',
         passVerifyCodeRule:false,
-        API:'http://localhost:8082/api/',
       }
     },
     methods:{
-      extractRecords() {
-        this.verifyCodeRule();
-        if (this.passVerifyCodeRule) {
-          this.openMainPage(this.code);
-        }else{
-          this.errorMessage("提取码有误");
-        }
-      },
-      verifyCodeRule() {
-        var regexp = /^([a-zA-Z]|[0-9]){4}$/g;
-        this.passVerifyCodeRule = regexp.test(this.code);
-      },
-      openMainPage(code=null) {
-        window.open('/main/'+code, '_self');
-      },
-      errorMessage(message) {
-        alert(message);
-      },
-      async createRecords() {
-        await this.createCode();
-        this.extractRecords();
-      },
-      async createCode() {
-        const url = this.API+"create-records/";
-        await axios.get(url).then((res)=>{
-          this.code = res.data.code;
-        })
-      }
+      extractRecords,
+      verifyCodeRule,
+      openMainPage,
+      errorMessage,
+      createRecords,
+      createCode
     }
   }
 </script>
