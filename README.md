@@ -19,5 +19,5 @@
    | name    | 文本名/文件名                     |
    | size    | 文本字数/文件大小                 |
 3. web页面设计
-![mainPage2](\doc\mainPage2.png)
-![mainPage1](\doc\mainPage1.png)
+![mainPage2](/doc/mainPage2.png)
+![mainPage1](/doc/mainPage1.png)
