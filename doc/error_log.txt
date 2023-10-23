@@ -1,0 +1,27 @@
+命令行连接：mongo --host localhost:27017 -u root -p example --authenticationDatabase admin
+
+
+
+
+错误日志：
+1.出现express包未安装情况，使用docker-compose中使用了npm install，不起作用。
+分析，command中命令是并行的？未下载完就运行node main
+解决：在构建镜像dockerfile中执行安装包命令
+
+2.镜像中，修改后进行docker-compose重新启动，修改了Dockerfile不起作用。
+解决：代码每修改一次，就需要将镜像进行更新（或删除），默认docker-compose扫描到同名的就是用cache。
+
+
+3.通过docker容器进行构建vue项目，请求的地址127.0.0.1或localhost为什么不能直接转换为服务器地址。
+解决：
+
+4.MongoServerError: command listCollections requires authentication
+解决：需要添加用户认证mongodb://username:password@hostname:port/database
+
+5.
+MongoServerSelectionError: connect ECONNREFUSED 127.0.0.1:27017
+MongoTopologyClosedError: Topology is closed
+解决：检查mongo状态以及端口关系
+
+6.意外退出的容器，如何杀除，无法删掉镜像
+解决：删除容器后删除镜像

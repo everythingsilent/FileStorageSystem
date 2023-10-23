@@ -1,0 +1,107 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+typedef struct Node {
+	int data;
+	struct Node* next, *front;
+} Node;
+
+typedef struct Queue {
+	Node *first, *rear;
+} Queue;
+
+
+// init queue
+Queue* initQueue(int a[],int aLength) {
+	Node* first = (Node*)malloc(sizeof(Node));
+	first->front = NULL;
+	first->next = NULL;
+	Node* rear = first;
+	
+	for(int i = 0; i < aLength; i++) {
+		Node* newNode = (Node*)malloc(sizeof(Node));
+		newNode->data = a[i];
+		rear->next = newNode;
+		newNode->front = rear;
+		rear = newNode;
+	}
+	rear->next = NULL;
+	Queue* queue = (Queue*)malloc(sizeof(Queue));
+	queue->first = first;
+	queue->rear = rear;
+	return queue;
+}
+
+
+// push node of rear
+int enQueue(Node** rear, int element) {
+	Node* newNode = (Node*)malloc(sizeof(Node));
+	newNode->data = element;
+	newNode->next = NULL;
+	(*rear)->next = newNode;
+	newNode->front = *rear;
+	*rear = newNode;
+	printf("队尾插入元素：%d\n", newNode->data);
+	return 1;
+}
+
+
+// out first node
+int deQueue(Node** first) {
+	int deQueueElementData = (*first)->next->data;
+	*first = (*first)->next;
+	printf("弹出元素：%d\n", deQueueElementData);
+	return 1;
+}
+
+
+// print queue
+void printQueue(Node* first) {
+	Node* foreachNode = first->next;
+	printf("当前队列元素：");
+	while (foreachNode != NULL) {
+		printf("%d\t", foreachNode->data);
+		foreachNode = foreachNode->next;
+	}
+	printf("\n");
+}
+
+// get head node
+void getHead(Node* first) {
+	printf("当前获队列头元素为：%d\n", first->next->data);
+}
+
+// destroy queue and free node
+void destroyQueue(Node** first) {
+	(*first) = NULL;
+	printf("已销毁队列");
+}
+
+// queue is empty
+int empty(Node* first) {
+	if (first->next == NULL) return 1;
+	return 0;
+}
+
+
+int main() {
+	int a[] = {19, 2, 3, 4, 5};
+	Queue* queue = initQueue(a, 5);
+	Node* first = queue->first;
+	Node* rear = queue->rear;
+	printQueue(first);
+	
+	enQueue(&rear, 89);
+	enQueue(&rear, 99);
+	enQueue(&rear, 100);
+	printQueue(first);
+	deQueue(&first);
+	printQueue(first);
+	
+	getHead(first);
+	destroyQueue(&first);
+	printQueue(first);
+	
+	return 1;
+}

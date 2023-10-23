@@ -1,0 +1,60 @@
+#include <stdio.h>
+#include <malloc.h>
+
+typedef struct Node {
+	int data; 
+	struct Node* next;
+} Node;
+
+
+// 创建栈 
+Node* createStack() {
+	Node* stack = (Node*)malloc(sizeof(Node));
+	stack->next = NULL;
+	return stack;
+} 
+
+// 栈添加元素
+void push(Node** first, int value) {
+	Node* newNode = (Node*)malloc(sizeof(Node));
+	newNode->data = value;
+	newNode->next = *first;
+	
+	*first = newNode;
+}
+
+// 栈弹出元素
+void pop(Node** first) {
+	*first = (*first)->next;
+}
+
+// 访问栈顶
+int peek(Node* first) {
+	printf("top:%d\n", first->data);
+	return first->data;
+}
+
+// 输出栈信息 
+int printList(Node* first) {
+	Node* foreachPointer = first;
+	int count = 0;
+	while(foreachPointer->next != NULL) {
+		printf("%d\t", foreachPointer->data);
+		count+=1;
+		foreachPointer = foreachPointer->next;
+	}
+	printf("length：%d\n", count);
+}
+
+int main() {
+	Node* first = createStack();
+	push(&first, 1);
+	push(&first, 2);
+	peek(first);
+	pop(&first);
+	push(&first, 99);
+	push(&first, 88);
+	peek(first);
+	printList(first);
+	return 0;
+}

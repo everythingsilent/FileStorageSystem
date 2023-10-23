@@ -1,9 +1,10 @@
 const { MongoClient } = require("mongodb");
 const common = require('./Common');
 
-const url = 'mongodb://127.0.0.1';
+//const url = 'mongodb://120.76.248.217';
+const url = 'mongodb://root:example@120.76.248.217:27017/admin';
 const client = new MongoClient(url);
-const db = client.db('test');
+const db = client.db('test111');
 
 // read
 async function verifyCodeExist(verifyCode) {

@@ -81,7 +81,7 @@
   export default {
     data() {
       return {
-        API:'http://localhost:8082/api/',
+        API:'http://127.0.0.1:8082/api/',
         code:'',
         passVerifyCodeRule:false,
       }
